@@ -1,14 +1,17 @@
 function c = c_function(location,~,p)
-% Diffusion Coeff.
-% c1 = [p.D1;p.D1; 0; 0; 0; 0; 0; 0];
-% c2 = [p.D2;p.D2; 0; 0; 0; 0; 0; 0];
-% c1 = [p.D1;p.D1; 0; 0; 0; 0; 0; 0;p.D1_C14;p.D1_C14;p.D1_C4;p.D1_C4];
-% c2 = [p.D2;p.D2; 0; 0; 0; 0; 0; 0;p.D2_C14;p.D2_C14;p.D2_C4;p.D2_C4];
+% Specifying the c coefficients as the following vectors.
+% For NQS toggle:
+%  c1 = [p.D1;p.D1; 0; 0; 0; 0; 0; 0];
+%  c2 = [p.D2;p.D2; 0; 0; 0; 0; 0; 0];
+% For QS toggle:
+%  c1 = [p.D1;p.D1; 0; 0; 0; 0; 0; 0;p.D1_C14;p.D1_C14;p.D1_C4;p.D1_C4];
+%  c2 = [p.D2;p.D2; 0; 0; 0; 0; 0; 0;p.D2_C14;p.D2_C14;p.D2_C4;p.D2_C4];
+
 loc_x=round(location.x,5);
 loc_y=round(location.y,5);
 
 nr = length(loc_x); % Number of columns
-indx=logical((loc_y>-p.Eps).*(loc_x<p.R+p.U*p.dR+p.Eps));
+indx=logical((loc_y>-p.Eps).*(loc_x<p.R+p.U*p.dR+p.Eps));  % Locate colony nodes
 
 
 if p.N==1

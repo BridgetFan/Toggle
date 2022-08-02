@@ -1,13 +1,15 @@
-filePattern = fullfile('./ClusterResult/', 'Jul09_2*Soln.mat');
+%% Generating movies from data
+
+filePattern = fullfile('./Result/', 'XX*.mat');
 files = dir(filePattern);
-%%
+
 for k=1:length(files)
     FileName=files(k).name;
     FileFolder=files(k).folder;
     load([FileFolder '/' FileName]);
     sc=get(0, 'MonitorPositions');
     p.po=sc(1,:);
-    ti_range=1:23;
+    ti_range=1:p.NT;
     rec_dt=1;
     frame_i=1;
     for jj=1:length(ti_range)
@@ -38,10 +40,10 @@ for k=1:length(files)
                     ic(ind_wb,:)=repmat(ic1,sum(ind_wb),1);
                     end
                     soln=ic;
-                    time_real=(ti+p.gI-1)*p.T*p.dT;
+                    time_real=(ti+p.gI-1)*p.T;
                 else
                     eval(['soln=soln' num2str(ti) '{' num2str(tj) '};']);
-                    time_real=(ti+p.gI-1)*p.T*p.dT+tj*p.dT*p.dt;
+                    time_real=(ti+p.gI-1)*p.T+tj*p.dt;
                 end
 
                 model=createpde(p.N);
